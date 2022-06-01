@@ -1,0 +1,186 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Teste Documentation",
+        "description": "This is a API test",
+        "version": "1.0.0",
+        "contact": {
+            "email": "luizgustavo1513@gmail.com"
+        }
+    },
+    "paths":{
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type":"string"
+                                    }
+                                },
+                                "example": {
+                                    "name":"username",
+                                    "email": "username@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500":{
+                        "description": "Username Already Exists"
+                    }
+                }
+            },
+            "get":{
+                "tags":["Users"],
+                "summary": "List all users",
+                "description": "List all users",
+                "parameters":[{
+                    "name": "user_id",
+                    "in": "header",
+                    "required": true,
+                    "type": "string",
+                    "minimum": 1
+                }],
+                "responses":{
+                    "200":{
+                        "description": "success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "object",
+                                        "properties":{
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "admin": {
+                                                "type": "boolean"  
+                                            },
+                                            "email": {
+                                                "type":"string"
+                                            },
+                                            "created_at": {
+                                                "type":"string"
+                                            },
+                                            "updated_at": {
+                                                "type":"string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Username Doesn't Exists or isn't admin"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}":{
+            "get":{
+                "tags":["Users"],
+                "summary": "List one user",
+                "description": "List one user",
+                "parameters":[{
+                    "name": "user_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "minimum": 1    
+                    
+                }],
+                "responses":{
+                    "200":{
+                        "description": "success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Username Doesn't Exists"
+                }
+            }
+        }
+    },
+        "/users/{user_id}/admin":{
+            "patch":{
+                "tags":["Users"],
+                "summary": "Turn into admin",
+                "description": "Turn one user into admin",
+                "parameters":[{
+                    "name": "user_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "minimum": 1    
+                    
+                }],
+                "responses":{
+                    "200":{
+                        "description": "success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Username Doesn't Exists"
+                }
+            }
+        }
+        }
+    },
+    "components":{
+        "schemas":{
+            "User":{
+                "type":"object",
+                "properties":{
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "admin": {
+                        "type": "boolean"  
+                    },
+                    "email": {
+                        "type":"string"
+                    },
+                    "created_at": {
+                        "type":"string"
+                    },
+                    "updated_at": {
+                        "type":"string"
+                    }
+                }
+            }
+        }
+    }
+}
